@@ -1,7 +1,9 @@
 import axios, { AxiosResponse } from "axios";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 import { AppDispatch } from "./store";
 import { TodoInterface } from "../models/TodoInterface";
+import env from "react-dotenv";
+
 import {
   addTodo,
   changeTodoStatus,
@@ -12,13 +14,19 @@ import {
   setTodos,
 } from "./todosSlice";
 
+const API_URL = env.API_URL;
+
 export const getTodosAsync =
   (boardId: string) => async (dispatch: AppDispatch) => {
-    try {      
+    try {
       dispatch(setLoading(true));
+      dispatch(setTodos([]));
       const response: AxiosResponse<TodoInterface[]> = await axios.get(
-        `http://localhost:7000/api/todos/${CryptoJS.SHA256(boardId).toString()}`
+        `${API_URL}/todos/${CryptoJS.SHA256(boardId).toString()}`,
       );
+      if (response.data.length === 0) {
+        dispatch(setError("No board with this Id, add new todo to create one"));
+      }
       dispatch(setTodos(response.data));
       dispatch(setLoading(false));
     } catch (error: any) {
@@ -32,13 +40,16 @@ export const addTodoAsync =
   async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true));
-      const response:AxiosResponse<TodoInterface> = await axios.post(`http://localhost:7000/api/todos`, {
-        title,
-        description,
-        id,
-        boardId: CryptoJS.SHA256(boardId).toString(),
-        status,
-      } as TodoInterface);
+      const response: AxiosResponse<TodoInterface> = await axios.post(
+        `${API_URL}/todos`,
+        {
+          title,
+          description,
+          id,
+          boardId: CryptoJS.SHA256(boardId).toString(),
+          status,
+        } as TodoInterface,
+      );
       dispatch(addTodo(response.data));
 
       dispatch(setLoading(false));
@@ -52,13 +63,15 @@ export const editTodoAsync =
   (todo: Partial<TodoInterface>) => async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true));
-      const response:AxiosResponse<TodoInterface> = await axios.put(
-        `http://localhost:7000/api/todos/${todo.id}`,
-        todo
+      const response: AxiosResponse<TodoInterface> = await axios.put(
+        `${API_URL}/todos/${todo.id}`,
+        todo,
       );
       dispatch(editTodo(response.data));
       dispatch(setLoading(false));
     } catch (error: any) {
+      console.log(error);
+
       dispatch(setError(error.message));
       dispatch(setLoading(false));
     }
@@ -69,7 +82,7 @@ export const deleteTodoAsync =
   async (dispatch: AppDispatch) => {
     try {
       dispatch(setLoading(true));
-      await axios.delete(`http://localhost:7000/api/todos/${id}`);
+      await axios.delete(`${API_URL}/todos/${id}`);
       dispatch(deleteTodo({ id, status }));
       dispatch(setLoading(false));
     } catch (error: any) {
@@ -102,13 +115,10 @@ export const changeTodoStatusAsync =
           newStatus,
           sourceId,
           destinationId,
-        })
+        }),
       );
 
-      await axios.put(
-        `http://localhost:7000/api/todos/${id}`,
-        { status: newStatus }
-      );
+      await axios.put(`${API_URL}/todos/${id}`, { status: newStatus });
       dispatch(setLoading(false));
     } catch (error: any) {
       dispatch(
@@ -118,7 +128,7 @@ export const changeTodoStatusAsync =
           newStatus: currentStatus,
           sourceId: destinationId,
           destinationId: sourceId,
-        })
+        }),
       );
 
       dispatch(setError(error.message));

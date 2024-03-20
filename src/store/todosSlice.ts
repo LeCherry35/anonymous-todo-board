@@ -1,4 +1,4 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TodoInterface } from "../models/TodoInterface";
 
 const initialState: TodosState = {
@@ -29,7 +29,7 @@ const todosSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
-    setError: (state, action: PayloadAction<string|null>) => {
+    setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload;
     },
     setTodos: (state, action: PayloadAction<TodoInterface[]>) => {
@@ -38,11 +38,11 @@ const todosSlice = createSlice({
       state.done = [];
       action.payload.forEach((todo) => {
         state[todo.status].push(todo);
-      })
+      });
     },
     addTodo: (state, action: PayloadAction<TodoInterface>) => {
-        state.todo.push(action.payload);
-      },
+      state.todo.push(action.payload);
+    },
     changeTodoStatus: (
       state,
       action: PayloadAction<{
@@ -51,22 +51,16 @@ const todosSlice = createSlice({
         newStatus: "todo" | "in-progress" | "done";
         sourceId: number;
         destinationId: number;
-      }>
+      }>,
     ) => {
-      
-      const { currentStatus, newStatus, sourceId, destinationId } = action.payload;
-      
-      const todo = state[action.payload.currentStatus].find(
-        (todo) => todo.id === action.payload.id
-      );
+      const { currentStatus, newStatus, sourceId, destinationId, id } =
+        action.payload;
+
+      const todo = state[currentStatus].find((todo) => todo.id === id);
       if (todo) {
-        todo.status = action.payload.newStatus;
-        state[action.payload.currentStatus].splice(action.payload.sourceId, 1);
-        state[action.payload.newStatus].splice(
-          action.payload.destinationId,
-          0,
-          todo
-        );
+        todo.status = newStatus;
+        state[currentStatus].splice(sourceId, 1);
+        state[newStatus].splice(destinationId, 0, todo);
       }
     },
     deleteTodo: (
@@ -74,13 +68,11 @@ const todosSlice = createSlice({
       action: PayloadAction<{
         id: string;
         status: "todo" | "in-progress" | "done";
-      }>
+      }>,
     ) => {
-      const newState = state[action.payload.status].filter(
-        (todo) => todo.id !== action.payload.id
-      );
-      
-      return { ...state, [action.payload.status]: newState };
+      const { status, id } = action.payload;
+      const newState = state[status].filter((todo) => todo.id !== id);
+      return { ...state, [status]: newState };
     },
     editTodo: (
       state,
@@ -89,19 +81,27 @@ const todosSlice = createSlice({
         status: "todo" | "in-progress" | "done";
         title?: string;
         description?: string;
-      }>
+      }>,
     ) => {
-      const todo = state[action.payload.status].find(
-        (todo) => todo.id === action.payload.id
-      );
+      const { status, id } = action.payload;
+      const todo = state[status].find((todo) => todo.id === id);
       if (todo) {
-        if(action.payload.title) todo.title = action.payload.title;
-        if(action.payload.description) todo.description = action.payload.description;
+        if (action.payload.title) todo.title = action.payload.title;
+        if (action.payload.description)
+          todo.description = action.payload.description;
       }
     },
   },
 });
 
-export const { addTodo, changeTodoStatus, deleteTodo, editTodo, setError, setLoading, setTodos, setBoardId } =
-  todosSlice.actions;
+export const {
+  addTodo,
+  changeTodoStatus,
+  deleteTodo,
+  editTodo,
+  setError,
+  setLoading,
+  setTodos,
+  setBoardId,
+} = todosSlice.actions;
 export default todosSlice.reducer;

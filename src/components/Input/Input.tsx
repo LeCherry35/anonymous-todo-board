@@ -7,10 +7,21 @@ interface InputProps {
   disabled?: boolean;
   styleAdd?: string;
 }
-const Input = ({ placeholder='', value, onChange, disabled=false, styleAdd='' }: InputProps) => {
+const Input = ({
+  placeholder = "",
+  value,
+  onChange,
+  disabled = false,
+  styleAdd = "",
+}: InputProps) => {
   return (
-    <input className={`p-2 border-2 border-solid border-zinc-300 outline-none rounded-md mb-2 focus-visible:border-zinc-700 duration-500 ${styleAdd}`} 
-    placeholder={placeholder} value={value} onChange={onChange} disabled={disabled}/>
+    <input
+      className={`p-2 border-2 border-solid border-zinc-300 outline-none rounded-md mb-2 focus-visible:border-zinc-700 duration-500 ${styleAdd}`}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+    />
   );
 };
 

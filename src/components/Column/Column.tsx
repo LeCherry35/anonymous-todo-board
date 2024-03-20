@@ -12,12 +12,15 @@ interface ColumnProps {
 
 const Column = ({ todos, title }: ColumnProps) => {
   return (
-    <div >
-      <Text type="heading" >{title}</Text>
+    <div>
+      <Text type="heading">{title}</Text>
       <Droppable droppableId={title}>
         {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}
-          className="p-2 bg-zinc-200 m-2 rounded-2xl min-h-[70vh]">
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className="p-2 bg-zinc-200 m-2 rounded-2xl min-h-[70vh]"
+          >
             {todos.map((todo, id) => (
               <Todo
                 title={todo.title}

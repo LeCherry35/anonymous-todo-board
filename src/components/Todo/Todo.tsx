@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  RightSquareOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Draggable } from "react-beautiful-dnd";
 import { useAppDispatch } from "../../hooks/redux";
 import { deleteTodoAsync, editTodoAsync } from "../../store/actionCreators";
-import  Input  from "../Input";
+import Input from "../Input";
 import Textarea from "../Textarea";
 import Button from "../Button";
 import Text from "../Text";
@@ -55,7 +51,7 @@ const Todo = ({ id, title, description, status, index }: TodoProps) => {
                       title: todoTitle,
                       description: todoDescription,
                       status,
-                    })
+                    }),
                   );
                   setEditMode(false);
                 }}
@@ -71,13 +67,14 @@ const Todo = ({ id, title, description, status, index }: TodoProps) => {
             </>
           )}
           <div className="flex justify-end">
-            <EditOutlined className="m-1" onClick={() => setEditMode((mode) => !mode)} />
-            <DeleteOutlined className="m-1"
-              onClick={() => dispatch(deleteTodoAsync( id, status ))}
+            <EditOutlined
+              className="m-1"
+              onClick={() => setEditMode((mode) => !mode)}
             />
-            {/* {!(status === "done") && (
-              <RightSquareOutlined onClick={() => changeStatus()} />
-            )} */}
+            <DeleteOutlined
+              className="m-1"
+              onClick={() => dispatch(deleteTodoAsync(id, status))}
+            />
           </div>
         </div>
       )}

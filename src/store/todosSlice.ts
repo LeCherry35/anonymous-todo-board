@@ -59,6 +59,7 @@ const todosSlice = createSlice({
       const todo = state[currentStatus].find((todo) => todo.id === id);
       if (todo) {
         todo.status = newStatus;
+        // To have ability to change order by drag and drop
         state[currentStatus].splice(sourceId, 1);
         state[newStatus].splice(destinationId, 0, todo);
       }

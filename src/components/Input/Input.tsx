@@ -5,7 +5,7 @@ interface InputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  styleAdd?: string;
+  styleAdd?: string; // To add additional styling with TailwindCSS
 }
 const Input = ({
   placeholder = "",

@@ -2,7 +2,7 @@ import React from "react";
 
 interface ButtonProps {
   onClick: () => void;
-  styleAdd?: string;
+  styleAdd?: string; // To add additional styling with TailwindCSS
   children: React.ReactNode;
   disabled?: boolean;
   type?: "main" | "";

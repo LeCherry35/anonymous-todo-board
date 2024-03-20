@@ -121,6 +121,7 @@ export const changeTodoStatusAsync =
       await axios.put(`${API_URL}/todos/${id}`, { status: newStatus });
       dispatch(setLoading(false));
     } catch (error: any) {
+      // Rollback changes in state if request failed
       dispatch(
         changeTodoStatus({
           id,

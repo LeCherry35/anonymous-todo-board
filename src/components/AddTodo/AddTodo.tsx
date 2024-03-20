@@ -10,7 +10,7 @@ import Text from "../Text";
 const AddTodo = () => {
   const [todoTitle, setTodoTitle] = useState<string>("");
   const [todoDescription, setTodoDescription] = useState<string>("");
-  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [isOpened, setIsOpened] = useState<boolean>(false); // Indicates if this block is expanded
 
   const dispatch = useAppDispatch();
   const boardId = useAppSelector((state) => state.todosReducer.boardId);
@@ -24,6 +24,7 @@ const AddTodo = () => {
         <Text type="heading">+</Text>
       </div>
     );
+
   return (
     <div className=" rounded-lg p-4 m-4 bg-white">
       <Text type="title">Todo title</Text>

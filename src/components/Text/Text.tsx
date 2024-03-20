@@ -21,7 +21,7 @@ const Text = ({ children, type = "text" }: TextProps) => {
     );
   }
   if (type === "text") {
-    return <p className="break-all text-zinc-700">{children}</p>;
+    return <p className="break-words text-zinc-700">{children}</p>;
   } else return <></>;
 };
 

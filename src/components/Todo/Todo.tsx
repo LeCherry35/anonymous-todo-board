@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+// import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { Draggable } from "react-beautiful-dnd";
 import { useAppDispatch } from "../../hooks/redux";
 import { deleteTodoAsync, editTodoAsync } from "../../store/actionCreators";
@@ -67,12 +68,12 @@ const Todo = ({ id, title, description, status, index }: TodoProps) => {
             </>
           )}
           <div className="flex justify-end">
-            <EditOutlined
-              className="m-1"
+            <AiOutlineEdit
+              className="m-1 h-[20px] w-[20px] hover:scale-110 active:scale-90 duration-500"
               onClick={() => setEditMode((mode) => !mode)}
             />
-            <DeleteOutlined
-              className="m-1"
+            <AiOutlineDelete
+              className="m-1 h-[20px] w-[20px] hover:scale-110 active:scale-90 duration-500"
               onClick={() => dispatch(deleteTodoAsync(id, status))}
             />
           </div>

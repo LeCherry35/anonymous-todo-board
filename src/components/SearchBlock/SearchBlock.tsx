@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Input from "../Input";
 import Button from "../Button";
 import { useAppDispatch } from "../../hooks/redux";
 import { setBoardId } from "../../store/todosSlice";
@@ -12,14 +11,15 @@ const SearchBlock = () => {
 
   return (
     <div className="flex">
-      <Input
+      <input
         placeholder="Enter board id"
         value={boardIdToFind}
         onChange={(e) => setBoardIdToFind(e.target.value)}
-        styleAdd="grow m-2"
+        maxLength={13}
+        className="p-2 border-2 border-solid border-zinc-300 outline-none rounded-md mb-2 focus-visible:border-zinc-700 duration-500 grow m-2"
       />
       <Button
-        styleAdd="m-2"
+        className="m-2"
         onClick={() => {
           dispatch(getTodosAsync(boardIdToFind));
           dispatch(setBoardId(boardIdToFind));

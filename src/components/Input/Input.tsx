@@ -1,22 +1,23 @@
 import React from "react";
+import s from "./Input.module.css";
 
 interface InputProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  styleAdd?: string; // To add additional styling with TailwindCSS
+  className?: string; // To add additional
 }
 const Input = ({
   placeholder = "",
   value,
   onChange,
   disabled = false,
-  styleAdd = "",
+  className = "",
 }: InputProps) => {
   return (
     <input
-      className={`p-2 border-2 border-solid border-zinc-300 outline-none rounded-md mb-2 focus-visible:border-zinc-700 duration-500 ${styleAdd}`}
+      className={s.customInput +' ' + className}
       placeholder={placeholder}
       value={value}
       onChange={onChange}

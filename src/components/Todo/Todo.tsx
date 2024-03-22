@@ -38,7 +38,7 @@ const Todo = ({ id, title, description, status, index }: TodoProps) => {
               <Input
                 value={todoTitle}
                 onChange={(e) => setTodoTitle(e.target.value)}
-                styleAdd="w-full"
+                className="w-full"
               />
               <Textarea
                 value={todoDescription}

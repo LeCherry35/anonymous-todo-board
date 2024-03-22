@@ -1,0 +1,18 @@
+.customButton {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    color: white;
+    background-color: #e4e4e7;
+}
+
+.mainButton {
+    background-color: #ea580c;
+}
+
+.secondaryButton {
+    background-color: #fb923c;
+}
+
+.customButton:disabled {
+    background-color: #e4e4e7;
+}

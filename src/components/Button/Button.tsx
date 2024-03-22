@@ -1,8 +1,9 @@
 import React from "react";
+import s from "./Button.module.css";
 
 interface ButtonProps {
   onClick: () => void;
-  styleAdd?: string; // To add additional styling with TailwindCSS
+  className?: string; // To add additional styling 
   children: React.ReactNode;
   disabled?: boolean;
   type?: "main" | "";
@@ -10,7 +11,7 @@ interface ButtonProps {
 
 const Button = ({
   onClick,
-  styleAdd = "",
+  className = "",
   children,
   disabled = false,
   type = "",
@@ -19,8 +20,8 @@ const Button = ({
     <button
       onClick={onClick}
       className={`block ${
-        type === "main" ? "bg-orange-600" : "bg-orange-400"
-      } py-1 px-2 rounded-md text-white disabled:bg-zinc-200 enabled:hover:scale-110 enabled:active:scale-90 duration-500 ${styleAdd}`}
+        type === "main" ? s.mainButton : s.secondaryButton
+      } ${s.customButton} ${className}`}
       disabled={disabled}
     >
       {children}
